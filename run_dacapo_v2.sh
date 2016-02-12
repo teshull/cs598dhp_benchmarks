@@ -13,7 +13,7 @@ declare -a benchmarks=(
 'sunflow'
 'tomcat'
 'tradebeans'
-# 'tradesoap' # this one stalls
+#'tradesoap' # this one stalls
 'xalan'
 'END'
 )
