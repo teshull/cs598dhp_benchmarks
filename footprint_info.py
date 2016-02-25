@@ -4,6 +4,7 @@ import glob
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 args = dict()
 data = dict()
@@ -194,6 +195,7 @@ def readCommandline():
 
 
 def main():
+    sys.exit()
     global data
     readCommandline()
     os.chdir(args.folder)

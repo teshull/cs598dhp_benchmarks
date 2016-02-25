@@ -1,0 +1,4 @@
+
+# this is prevent SIGSEGV from causing a crash
+# Java uses these on purpose
+handle SIGSEGV nostop noprint pass
