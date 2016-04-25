@@ -40,22 +40,34 @@ size_options=("${v1_size_options[@]}")
 run_configs(){
     local count=0
 
-    rm -rf $GC_BASE
-    mkdir $GC_BASE
-    rm -rf $PIN_BASE
-    mkdir $PIN_BASE
-    rm -rf $PAPI_BASE
-    mkdir $PAPI_BASE
+    if [[ "$LOG_GC" == "yes" ]]; then
+        rm -rf $GC_BASE
+        mkdir $GC_BASE
+    fi
+    if [[ "$USE_PIN" == "yes" ]]; then
+        rm -rf $PIN_BASE
+        mkdir $PIN_BASE
+    fi
+    if [[ "$USE_PAPI" == "yes" ]]; then
+        rm -rf $PAPI_BASE
+        mkdir $PAPI_BASE
+    fi
 
     while [[ ${size_options[count]} != 'END' ]]
     do
         size=${size_options[count]}
         gc_dir=$GC_BASE/$size
-        mkdir $gc_dir
+        if [[ "$LOG_GC" == "yes" ]]; then
+            mkdir $gc_dir
+        fi
         pin_dir=$PIN_BASE/$size
-        mkdir $pin_dir
+        if [[ "$USE_PIN" == "yes" ]]; then
+            mkdir $pin_dir
+        fi
         papi_dir=$PAPI_BASE/$size
-        mkdir $papi_dir
+        if [[ "$USE_PAPI" == "yes" ]]; then
+            mkdir $papi_dir
+        fi
         local gcCount=0
         while [[ ${gc_options[gcCount]} != 'END' ]]
         do
@@ -63,17 +75,17 @@ run_configs(){
             rm -rf scratch #removing the scratch dir
             gc_type=${gc_options[gcCount]}
             if [[ "$LOG_GC" == "yes" ]]; then
-                gc_dir=$gc_dir/$gc_type
+                gc_dir=$GC_BASE/$size/$gc_type
                 mkdir $gc_dir
                 OTHER_ARGS="$OTHER_ARGS --detailed_gc --gc_log $gc_dir"
             fi
             if [[ "$USE_PIN" == "yes" ]]; then
-                pin_dir=$pin_dir/$gc_type
+                pin_dir=$PIN_BASE/$size/$gc_type
                 mkdir $pin_dir
                 OTHER_ARGS="$OTHER_ARGS --pin --send_markers_to_pin --pin_log $pin_dir"
             fi
             if [[ "$USE_PAPI" == "yes" ]]; then
-                papi_dir=$papi_dir/$gc_type
+                papi_dir=$PAPI_BASE/$size/$gc_type
                 mkdir $papi_dir
                 OTHER_ARGS="$OTHER_ARGS --papi_monitor --papi_sampling --papi_sampling_rate $SAMPLE_RATE --papi_result $papi_dir"
             fi
