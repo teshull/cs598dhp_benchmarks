@@ -3,7 +3,7 @@
 SCRIPT_LOC=run_dacapo_v1.sh
 #OTHER_ARGS="--serial_gc --detailed_gc"
 #OTHER_ARGS="--pin --serial_gc --detailed_gc"
-GC_BASE="dacapo_v1"
+GC_BASE="dacapo_v1_gc"
 PIN_BASE="dacapo_v1_pin"
 PAPI_BASE="dacapo_v1_papi"
 SAMPLE_RATE=200
