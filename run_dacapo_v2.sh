@@ -24,12 +24,15 @@ BENCHMARK_ARGS=""
 JAVA_ARGS=""
 LOG_DIR="empty"
 
+SCHOOL_DIR="DHP_CS598"
+#SCHOOL_DIR="CS598DHP"
+
 PIN_LOG_DIR="empty"
 DO_PIN="no"
 PIN="/Users/tshull7/UIUC/research/pin-2.13-65163-clang.5.0-mac/pin"
 PIN="/home/tshull226/Documents/research/pin-2.14-71313-gcc.4.4.7-linux/pin"
 PINTOOL="/Users/tshull7/UIUC/CS598DHP/project/trace_generator/obj-intel64/GCTracer.dylib"
-PINTOOL="/home/tshull226/Documents/school/CS598DHP/project/git/trace_generator/obj-intel64/GCTracer.so"
+PINTOOL="/home/tshull226/Documents/school/$SCHOOL_DIR/project/git/trace_generator/obj-intel64/GCTracer.so"
 
 CACHE_SIZE=$((8*1024))
 CACHE_LINE_SIZE=64
@@ -52,9 +55,9 @@ fi
 
 case $platform in
     'linux')
-        JAVA_PATH="/home/tshull226/Documents/school/DHP_CS598/jdk8u60/build/linux-x86_64-normal-server-release/jdk/bin/java"
-        #JAVA_PATH="/home/tshull226/Documents/school/DHP_CS598/hotspot_debug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
-        #JAVA_PATH="/home/tshull226/Documents/school/DHP_CS598/jdk8u60/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
+        JAVA_PATH="/home/tshull226/Documents/school/$SCHOOL_DIR/jdk8u60/build/linux-x86_64-normal-server-release/jdk/bin/java"
+        #JAVA_PATH="/home/tshull226/Documents/school/$SCHOOL_DIR/hotspot_debug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
+        #JAVA_PATH="/home/tshull226/Documents/school/$SCHOOL_DIR/jdk8u60/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
         ;;
     'mac')
         JAVA_PATH="java"
@@ -98,8 +101,8 @@ do
     key="$1"
     case $key in
         --debug)
-            JAVA_PATH="gdb -x gdb_commands.txt --args /home/tshull226/Documents/school/DHP_CS598/jdk8u60/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
-            #JAVA_PATH="gdb -x gdb_commands.txt --args /home/tshull226/Documents/school/DHP_CS598/hotspot_debug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
+            JAVA_PATH="gdb -x gdb_commands.txt --args /home/tshull226/Documents/school/$SCHOOL_DIR/jdk8u60/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
+            #JAVA_PATH="gdb -x gdb_commands.txt --args /home/tshull226/Documents/school/$SCHOOL_DIR/hotspot_debug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
             ;;
         --mark_gc_phases)
             JAVA_ARGS="$JAVA_ARGS -XX:+MarkGCStartEnd"
@@ -151,7 +154,7 @@ do
             JAVA_ARGS="${JAVA_ARGS} -XX:+UseG1GC"
             ;;
         --papi_monitor)
-            JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters -XX:PapiEventFile=/home/tshull226/Documents/school/DHP_CS598/benchmarks/papi_options.txt"
+            JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters -XX:PapiEventFile=/home/tshull226/Documents/school/$SCHOOL_DIR/benchmarks/papi_options.txt"
             #JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters"
             ;;
         --papi_result)
