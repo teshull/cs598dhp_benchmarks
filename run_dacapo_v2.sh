@@ -24,9 +24,6 @@ BENCHMARK_ARGS=""
 JAVA_ARGS=""
 LOG_DIR="empty"
 
-#java -jar $BENCH_DIR -h
-#exit 0
-
 PIN_LOG_DIR="empty"
 DO_PIN="no"
 PIN="/Users/tshull7/UIUC/research/pin-2.13-65163-clang.5.0-mac/pin"
@@ -34,11 +31,11 @@ PIN="/home/tshull226/Documents/research/pin-2.14-71313-gcc.4.4.7-linux/pin"
 PINTOOL="/Users/tshull7/UIUC/CS598DHP/project/trace_generator/obj-intel64/GCTracer.dylib"
 PINTOOL="/home/tshull226/Documents/school/CS598DHP/project/git/trace_generator/obj-intel64/GCTracer.so"
 
-CACHE_SIZE=8*1024
+CACHE_SIZE=$((8*1024))
 CACHE_LINE_SIZE=64
 CACHE_ASSOCIATIVITY=16
 
-PINARGS=" -cs -c $CACHE_SIZE -l $CACHE_LINE_SIZE -a $CACHE_ASSOCIATIVITY"
+PINARGS=" -cs -at -c $CACHE_SIZE -l $CACHE_LINE_SIZE -a $CACHE_ASSOCIATIVITY"
 
 #java -jar $BENCH_DIR -h
 #exit 0
@@ -55,11 +52,9 @@ fi
 
 case $platform in
     'linux')
-        #JAVA_PATH="java"
-        JAVA_PATH="/home/tshull226/Documents/school/CS598DHP/project/jdk8u60/build/linux-x86_64-normal-server-release/jdk/bin/java"
-        #JAVA_PATH="/home/tshull226/Documents/school/CS598DHP/project/jdk8u60/build/linux-x86_64-normal-server-fastdebug/jdk/bin/java"
-        #JAVA_PATH="/home/tshull226/Documents/school/CS598DHP/project/debug/slowdebug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
-        # export PATH="/home/tshull226/Documents/school/CS598DHP/project/jdk8u60/build/linux-x86_64-normal-server-release/jdk/bin:$PATH"
+        JAVA_PATH="/home/tshull226/Documents/school/DHP_CS598/jdk8u60/build/linux-x86_64-normal-server-release/jdk/bin/java"
+        #JAVA_PATH="/home/tshull226/Documents/school/DHP_CS598/hotspot_debug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
+        #JAVA_PATH="/home/tshull226/Documents/school/DHP_CS598/jdk8u60/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
         ;;
     'mac')
         JAVA_PATH="java"
@@ -103,15 +98,14 @@ do
     key="$1"
     case $key in
         --debug)
-            #JAVA_PATH="gdb --args /home/tshull226/Documents/school/CS598DHP/project/jdk8u60/build/linux-x86_64-normal-server-fastdebug/jdk/bin/java"
-            #CURRENTLY NOT WORKING
-            JAVA_PATH="/home/tshull226/Documents/school/CS598DHP/project/jdk8u60/build/linux-x86_64-normal-server-fastdebug/jdk/bin/java"
-            JAVA_PATH="gdb --args /home/tshull226/Documents/school/CS598DHP/project/jdk8u60/build/linux-x86_64-normal-server-release/jdk/bin/java"
-            JAVA_PATH="gdb --args /home/tshull226/Documents/school/CS598DHP/project/jdk8u60/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
-            JAVA_PATH="gdb --args /home/tshull226/Documents/school/CS598DHP/project/debug/slowdebug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
+            JAVA_PATH="gdb -x gdb_commands.txt --args /home/tshull226/Documents/school/DHP_CS598/jdk8u60/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
+            #JAVA_PATH="gdb -x gdb_commands.txt --args /home/tshull226/Documents/school/DHP_CS598/hotspot_debug/build/linux-x86_64-normal-server-slowdebug/jdk/bin/java"
             ;;
         --mark_gc_phases)
             JAVA_ARGS="$JAVA_ARGS -XX:+MarkGCStartEnd"
+            ;;
+        --send_markers_to_pin)
+            JAVA_ARGS="$JAVA_ARGS -XX:+SendMessagesToPin"
             ;;
         --small_data)
             BENCHMARK_ARGS="$BENCHMARK_ARGS --size small"
@@ -140,8 +134,36 @@ do
         --detailed_gc)
             JAVA_ARGS="${JAVA_ARGS} -XX:+PrintGCDetails -XX:+PrintGCDateStamps"
             ;;
-        --serial_gc)
+        --serial_serial_gc)
             JAVA_ARGS="${JAVA_ARGS} -XX:+UseSerialGC"
+            ;;
+        --parallel_both_gc)
+            JAVA_ARGS="${JAVA_ARGS} -XX:+UseParallelGC"
+            ;;
+        --parallel_serial_gc)
+            JAVA_ARGS="${JAVA_ARGS} -XX:+UseParallelGC -XX:-UseParallelOldGC"
+            ;;
+        --conc_mark_sweep_gc)
+            #the useparnewgc is on by default
+            JAVA_ARGS="${JAVA_ARGS} -XX:+UseParNewGC -XX:+UseConcMarkSweepGC"
+            ;;
+        --g1_gc)
+            JAVA_ARGS="${JAVA_ARGS} -XX:+UseG1GC"
+            ;;
+        --papi_monitor)
+            JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters -XX:PapiEventFile=/home/tshull226/Documents/school/DHP_CS598/benchmarks/papi_options.txt"
+            #JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters"
+            ;;
+        --papi_result)
+            JAVA_ARGS="${JAVA_ARGS} -XX:PapiResultFile=$2"
+            shift
+            ;;
+        --papi_sampling)
+            JAVA_ARGS="${JAVA_ARGS} -XX:+PerformPapiSampling"
+            ;;
+        --papi_sampling_rate)
+            JAVA_ARGS="${JAVA_ARGS} -XX:PapiSamplingInterval=$2"
+            shift
             ;;
         --show_info)
             BENCHMARK_ARGS="$BENCHMARK_ARGS --information"
