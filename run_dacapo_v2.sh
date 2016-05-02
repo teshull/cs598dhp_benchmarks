@@ -2,10 +2,10 @@
 
 declare -a benchmarks=(
 'avrora' 
-'batik'
-'eclipse'
+#'batik'
+#'eclipse'
 'fop'
-'h2'
+#'h2' # too big
 'jython'
 'luindex'
 'lusearch'
@@ -18,6 +18,30 @@ declare -a benchmarks=(
 'END'
 )
 
+
+
+declare -a benchmark_sizes=(
+'large' 
+#'large' 
+#'large' 
+'default' 
+#'huge' 
+'large' 
+'default' 
+'large' 
+'large' 
+'large' 
+'huge' 
+'huge' 
+#'default' # this one stalls
+'large' 
+'END'
+)
+
+#declare -a benchmarks=(
+#'tradebeans' 
+#'END'
+#)
 
 BENCH_DIR=~/Dropbox/CS_598DHP/benchmarks/dacapo-9.12-bach.jar
 BENCHMARK_ARGS=""
@@ -33,15 +57,20 @@ PIN="/Users/tshull7/UIUC/research/pin-2.13-65163-clang.5.0-mac/pin"
 PIN="/home/tshull226/Documents/research/pin-2.14-71313-gcc.4.4.7-linux/pin"
 PINTOOL="/Users/tshull7/UIUC/CS598DHP/project/trace_generator/obj-intel64/GCTracer.dylib"
 PINTOOL="/home/tshull226/Documents/school/$SCHOOL_DIR/project/git/trace_generator/obj-intel64/GCTracer.so"
+USE_MAX_SIZE="no"
 
 CACHE_SIZE=$((8*1024))
 CACHE_LINE_SIZE=64
 CACHE_ASSOCIATIVITY=16
 
-PINARGS=" -cs -at -c $CACHE_SIZE -l $CACHE_LINE_SIZE -a $CACHE_ASSOCIATIVITY"
+#PINARGS=" -cs -at -c $CACHE_SIZE -l $CACHE_LINE_SIZE -a $CACHE_ASSOCIATIVITY"
+#not doing address translation right now, as I'm not going to use DRAMSim
+PINARGS=" -cs -c $CACHE_SIZE -l $CACHE_LINE_SIZE -a $CACHE_ASSOCIATIVITY"
 
 #java -jar $BENCH_DIR -h
 #exit 0
+
+PAPI_LOG_DIR="empty"
 
 unamestr=`uname`
 platform='unknown'
@@ -83,10 +112,17 @@ run_on_benchmarks(){
         if [[ "$LOG_DIR" != "empty" ]]; then
             EXEC_COMMAND="$EXEC_COMMAND -Xloggc:${LOG_DIR}/$benchmark-gc.log"
         fi
+        if [[ "$PAPI_LOG_DIR" != "empty" ]]; then
+            EXEC_COMMAND="${EXEC_COMMAND} -XX:PapiResultFile=${PAPI_LOG_DIR}/$benchmark-papi.log"
+        fi
+        TEMP_BENCHMARK_ARGS=""
+        if [[ "$USE_MAX_SIZE" == "yes" ]]; then
+            TEMP_BENCHMARK_ARGS="--size ${benchmark_sizes[count]}"
+        fi
         #java -jar $BENCH_DIR -i $benchmark
         #$JAVA_PATH -version
         #$JAVA_PATH $JAVA_ARGS -jar $BENCH_DIR $BENCHMARK_ARGS $benchmark
-        EXEC_COMMAND="$EXEC_COMMAND -jar $BENCH_DIR $BENCHMARK_ARGS $benchmark"
+        EXEC_COMMAND="$EXEC_COMMAND -jar $BENCH_DIR $BENCHMARK_ARGS $TEMP_BENCHMARK_ARGS $benchmark"
         echo "$EXEC_COMMAND"
         $EXEC_COMMAND
         count=$(( $count + 1 ))
@@ -116,11 +152,14 @@ do
         --large_data)
             BENCHMARK_ARGS="$BENCHMARK_ARGS --size large"
             ;;
+        --huge_data)
+            BENCHMARK_ARGS="$BENCHMARK_ARGS --size huge"
+            ;;
         --default_data)
             BENCHMARK_ARGS="$BENCHMARK_ARGS --size default"
             ;;
-        --huge_data)
-            BENCHMARK_ARGS="$BENCHMARK_ARGS --size huge"
+        --max_size)
+            USE_MAX_SIZE="yes"
             ;;
         --gc_log)
             LOG_DIR=$2
@@ -132,6 +171,10 @@ do
             ;;
         --pin_log)
             PIN_LOG_DIR=$2
+            shift
+            ;;
+        --pintool)
+            PINTOOL=$2
             shift
             ;;
         --detailed_gc)
@@ -154,11 +197,16 @@ do
             JAVA_ARGS="${JAVA_ARGS} -XX:+UseG1GC"
             ;;
         --papi_monitor)
-            JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters -XX:PapiEventFile=/home/tshull226/Documents/school/$SCHOOL_DIR/benchmarks/papi_options.txt"
-            #JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters"
+            JAVA_ARGS="${JAVA_ARGS} -XX:+UsePapiCounters"
+            ;;
+        --papi_config)
+            CONFIG_LOC=$2
+            JAVA_ARGS="${JAVA_ARGS} -XX:PapiEventFile=/home/tshull226/Documents/school/$SCHOOL_DIR/benchmarks/$CONFIG_LOC"
+            shift
             ;;
         --papi_result)
-            JAVA_ARGS="${JAVA_ARGS} -XX:PapiResultFile=$2"
+            PAPI_LOG_DIR=$2
+            #JAVA_ARGS="${JAVA_ARGS} -XX:PapiResultFile=$2"
             shift
             ;;
         --papi_sampling)

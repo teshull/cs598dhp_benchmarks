@@ -6,12 +6,18 @@ SCRIPT_LOC=run_dacapo_v1.sh
 GC_BASE="dacapo_v1_gc"
 PIN_BASE="dacapo_v1_pin"
 PAPI_BASE="dacapo_v1_papi"
-SAMPLE_RATE=200
+#SAMPLE_RATE=50
+SAMPLE_RATE=10
 USE_PIN="no"
 LOG_GC="no"
 USE_PAPI="no"
+PAPI_NAME="empty"
 
 declare -a v1_size_options=(
+#'large_data'
+#'END'
+'max_size'
+'END'
 'small_data'
 'large_data'
 'default_data'
@@ -19,6 +25,10 @@ declare -a v1_size_options=(
 )
 
 declare -a v2_size_options=(
+#'large_data'
+#'END'
+'max_size'
+'END'
 'small_data'
 'large_data'
 'default_data'
@@ -30,8 +40,18 @@ declare -a gc_options=(
 'serial_serial_gc'
 'parallel_both_gc'
 'parallel_serial_gc'
+'END'
 'conc_mark_sweep_gc'
 'g1_gc'
+'END'
+)
+
+declare -a pintool_choices=(
+#"/home/tshull226/Documents/school/DHP_CS598/trace_generator/obj-intel64/GCTracer.so"
+"/home/tshull226/Documents/school/DHP_CS598/parallel_trace_generator/obj-intel64/GCTracer.so"
+"/home/tshull226/Documents/school/DHP_CS598/parallel_trace_generator/obj-intel64/GCTracer.so"
+"/home/tshull226/Documents/school/DHP_CS598/parallel_trace_generator/obj-intel64/GCTracer.so"
+"/home/tshull226/Documents/school/DHP_CS598/parallel_trace_generator/obj-intel64/GCTracer.so"
 'END'
 )
 
@@ -74,6 +94,7 @@ run_configs(){
             OTHER_ARGS=""
             rm -rf scratch #removing the scratch dir
             gc_type=${gc_options[gcCount]}
+            pintool=${pintool_choices[gcCount]}
             if [[ "$LOG_GC" == "yes" ]]; then
                 gc_dir=$GC_BASE/$size/$gc_type
                 mkdir $gc_dir
@@ -82,15 +103,18 @@ run_configs(){
             if [[ "$USE_PIN" == "yes" ]]; then
                 pin_dir=$PIN_BASE/$size/$gc_type
                 mkdir $pin_dir
-                OTHER_ARGS="$OTHER_ARGS --pin --send_markers_to_pin --pin_log $pin_dir"
+                OTHER_ARGS="$OTHER_ARGS --pin --send_markers_to_pin --pin_log $pin_dir --pintool $pintool"
             fi
             if [[ "$USE_PAPI" == "yes" ]]; then
                 papi_dir=$PAPI_BASE/$size/$gc_type
                 mkdir $papi_dir
                 OTHER_ARGS="$OTHER_ARGS --papi_monitor --papi_sampling --papi_sampling_rate $SAMPLE_RATE --papi_result $papi_dir"
+                if [[ "$PAPI_NAME" != "empty" ]]; then
+                OTHER_ARGS="$OTHER_ARGS --papi_config configs/${PAPI_NAME}.txt"
+                fi
             fi
 
-            ./${SCRIPT_LOC} $OTHER_ARGS --${gc_options} --${size}
+            ./${SCRIPT_LOC} $OTHER_ARGS --${gc_type} --${size}
             gcCount=$(( $gcCount + 1 ))
         done
         count=$(( $count + 1 ))
@@ -106,10 +130,9 @@ do
         -v2|--use_v2)
             SCRIPT_LOC=run_dacapo_v2.sh
             size_options=("${v2_size_options[@]}")
-            GC_BASE="dacapo_v2"
+            GC_BASE="dacapo_v2_gc"
             PIN_BASE="dacapo_v2_pin"
             PAPI_BASE="dacapo_v2_papi"
-            shift
             ;;
         -p|--use_pin)
             USE_PIN="yes"
@@ -119,6 +142,11 @@ do
             ;;
         -pc|--papi)
             USE_PAPI="yes"
+            ;;
+        -pn|--papi_name)
+            PAPI_NAME=$2
+            PAPI_BASE="${PAPI_BASE}_${PAPI_NAME}"
+            shift
             ;;
         *)
             echo "unknown option"
