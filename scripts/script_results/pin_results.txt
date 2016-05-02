@@ -1,0 +1,75 @@
+gc type  serial_serial_gc
+filename:  sunflow-pin.log
+filename:  luindex-pin.log
+filename:  lusearch-pin.log
+filename:  xalan-pin.log
+filename:  pmd-pin.log
+filename:  tomcat-pin.log
+filename:  jython-pin.log
+filename:  avrora-pin.log
+filename:  tradebeans-pin.log
+filename:  fop-pin.log
+gc type  parallel_both_gc
+filename:  sunflow-pin.log
+filename:  luindex-pin.log
+filename:  lusearch-pin.log
+filename:  xalan-pin.log
+filename:  pmd-pin.log
+filename:  tomcat-pin.log
+filename:  jython-pin.log
+filename:  avrora-pin.log
+filename:  tradebeans-pin.log
+filename:  fop-pin.log
+gc type  parallel_serial_gc
+filename:  sunflow-pin.log
+filename:  luindex-pin.log
+filename:  lusearch-pin.log
+filename:  xalan-pin.log
+filename:  pmd-pin.log
+filename:  tomcat-pin.log
+filename:  jython-pin.log
+filename:  avrora-pin.log
+filename:  tradebeans-pin.log
+filename:  fop-pin.log
+
+gc count  info
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc
+benchmarks & young & full & total & young & full & total & young & full & total
+avrora & 7 & 1 & 8 & 5 & 1 & 6 & 5 & 1 & 6
+fop & 3 & 1 & 4 & 3 & 1 & 4 & 3 & 1 & 4
+jython & 385 & 1 & 386 & 28 & 1 & 29 & 28 & 1 & 29
+luindex & 0 & 1 & 1 & 1 & 1 & 2 & 1 & 1 & 2
+lusearch & 317 & 1 & 318 & 24 & 1 & 25 & 24 & 1 & 25
+pmd & 29 & 1 & 30 & 7 & 1 & 8 & 7 & 1 & 8
+sunflow & 183 & 1 & 184 & 17 & 1 & 18 & 17 & 1 & 18
+tomcat & 569 & 2 & 571 & 35 & 2 & 37 & 38 & 2 & 40
+tradebeans & 82 & 5 & 87 & 13 & 6 & 19 & 9 & 5 & 14
+xalan & 283 & 1 & 284 & 22 & 1 & 23 & 22 & 1 & 23
+
+memory footprint info
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall
+avrora & 8.07 & 4.36 & 40.60 & 12.20 & 4.57 & 40.60 & 13.72 & 4.55 & 40.60
+fop & 8.01 & 4.27 & 52.24 & 12.39 & 4.41 & 52.24 & 12.40 & 4.40 & 52.24
+jython & 1.32 & 3.70 & 121.00 & 3.60 & 16.14 & 121.00 & 3.62 & 16.24 & 121.00
+luindex & N/A & 5.19 & 16.27 & 10.45 & 4.98 & 16.27 & 10.45 & 4.97 & 16.27
+lusearch & 1.63 & 3.87 & 45.02 & 2.82 & 4.42 & 45.02 & 2.74 & 4.38 & 45.02
+pmd & 6.00 & 3.59 & 95.46 & 7.28 & 5.17 & 95.46 & 8.81 & 5.37 & 95.46
+sunflow & 3.37 & 3.86 & 71.05 & 4.98 & 11.96 & 71.05 & 4.66 & 12.02 & 71.05
+tomcat & 1.46 & 6.52 & 121.20 & 3.77 & 15.44 & 121.20 & 4.27 & 16.18 & 121.20
+tradebeans & 7.26 & 8.32 & 327.65 & 14.95 & 2.32 & 327.65 & 10.24 & 6.77 & 327.65
+xalan & 2.74 & 12.51 & 98.09 & 6.05 & 13.00 & 98.09 & 6.02 & 13.05 & 98.09
+
+cache hit rate info
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall
+avrora & 99.78 & 99.58 & 99.76 & 99.78 & 99.58 & 99.79 & 99.78 & 99.58 & 99.82
+fop & 99.66 & 99.52 & 99.68 & 99.66 & 99.52 & 99.70 & 99.66 & 99.52 & 99.70
+jython & 99.88 & 99.63 & 100.00 & 99.88 & 99.63 & 99.98 & 99.88 & 99.63 & 99.99
+luindex & 99.32 & 99.62 & 99.38 & 99.32 & 99.62 & 99.32 & 99.32 & 99.62 & 99.33
+lusearch & 99.75 & 99.54 & 99.98 & 99.75 & 99.54 & 99.82 & 99.75 & 99.54 & 99.82
+pmd & 99.66 & 99.66 & 99.69 & 99.66 & 99.66 & 99.66 & 99.66 & 99.66 & 99.61
+sunflow & 99.68 & 99.22 & 99.86 & 99.68 & 99.22 & 99.81 & 99.68 & 99.22 & 99.80
+tomcat & 99.83 & 99.54 & 99.98 & 99.83 & 99.54 & 99.86 & 99.83 & 99.54 & 99.87
+tradebeans & 99.59 & 99.45 & 99.79 & 99.59 & 99.45 & 99.64 & 99.59 & 99.45 & 99.26
+xalan & 99.62 & 99.45 & 99.90 & 99.62 & 99.45 & 99.58 & 99.62 & 99.45 & 99.56

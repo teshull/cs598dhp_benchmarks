@@ -1,0 +1,18 @@
+gc type  serial_serial_gc
+gc type  conc_mark_sweep_gc
+gc type  parallel_both_gc
+gc type  parallel_serial_gc
+gc type  g1_gc
+
+papi **During GC** info type: L2
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & g1_gc & g1_gc & g1_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall & young & full & overall & young & full & overall
+avrora & 72.33 & 53.21 & 70.74 & 75.44 & 54.63 & 73.13 & 71.05 & 55.78 & 69.77 & 73.67 & 54.09 & 69.32 & 66.75 & 55.56 & 66.33
+fop & 64.10 & 64.60 & 64.16 & 54.84 & 62.35 & 55.92 & 58.30 & 65.48 & 59.49 & 66.72 & 64.96 & 66.56 & 54.27 & 63.89 & 54.62
+h2 & 38.68 & 57.00 & 47.27 & 41.92 & 51.39 & 47.16 & 40.19 & 65.43 & 54.93 & 48.75 & 54.83 & 49.90 & 45.53 & 60.92 & 49.02
+jython & 56.73 & 51.73 & 56.69 & 57.77 & 44.98 & 57.22 & 59.48 & 52.73 & 59.02 & 58.25 & 51.48 & 58.20 & 57.84 & 59.83 & 57.93
+luindex & N/A & 67.80 & 67.80 & 66.77 & 71.93 & 68.49 & 67.05 & 64.72 & 65.50 & N/A & 64.21 & 64.21 & 57.25 & 71.43 & 57.93
+lusearch & 62.21 & 65.01 & 62.22 & 61.86 & 64.45 & 62.05 & 59.22 & 64.19 & 59.59 & 62.37 & 65.06 & 62.39 & 62.26 & 63.79 & 62.28
+pmd & 63.14 & 68.02 & 63.14 & 63.29 & 61.17 & 63.15 & 61.62 & 65.11 & 61.62 & 62.82 & 65.29 & 62.82 & 65.28 & 64.15 & 65.26
+sunflow & 57.69 & 67.36 & 57.79 & 53.99 & 65.34 & 54.36 & 50.54 & 66.23 & 51.49 & 61.68 & 67.03 & 61.74 & 67.34 & 61.08 & 67.30
+tomcat & 23.39 & 48.02 & 23.57
