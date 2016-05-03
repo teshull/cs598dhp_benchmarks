@@ -1,0 +1,36 @@
+gc type  serial_serial_gc
+gc type  conc_mark_sweep_gc
+gc type  parallel_both_gc
+gc type  parallel_serial_gc
+gc type  g1_gc
+
+papi **During GC** info type: LLC
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & g1_gc & g1_gc & g1_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall & young & full & overall & young & full & overall
+kernel_four & 24.03 & 36.27 & 30.40 & 31.42 & 41.77 & 37.67 & 31.99 & 56.96 & 47.37 & 46.58 & N/A & 46.58 & 35.90 & N/A & 35.90
+kernel_one & 29.51 & N/A & 29.51 & 29.81 & N/A & 29.81 & 27.97 & N/A & 27.97 & 35.03 & N/A & 35.03 & 24.42 & N/A & 24.42
+kernel_three & 59.70 & 42.88 & 54.99 & 52.81 & 49.75 & 51.41 & 50.83 & 58.73 & 54.35 & 70.19 & N/A & 70.19 & 46.30 & N/A & 46.30
+kernel_two & 34.59 & 43.91 & 36.40 & 89.19 & 51.86 & 72.83 & 89.57 & 62.98 & 77.48 & 66.01 & N/A & 66.01 & 93.04 & N/A & 93.04
+
+done
+
+papi **After GC** info type: LLC
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & g1_gc & g1_gc & g1_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall & young & full & overall & young & full & overall
+kernel_four & 42.98 & 48.59 & 44.38 & 47.40 & 22.95 & 40.88 & 49.84 & 43.22 & 48.07 & 41.60 & N/A & 41.60 & 56.63 & N/A & 56.63
+kernel_one & 29.62 & N/A & 29.62 & 32.32 & N/A & 32.32 & 30.77 & N/A & 30.77 & 36.17 & N/A & 36.17 & 38.58 & N/A & 38.58
+kernel_three & 66.68 & 63.83 & 66.62 & 50.70 & 63.45 & 51.38 & 52.87 & 53.98 & 52.93 & 65.15 & N/A & 65.15 & 54.02 & N/A & 54.02
+kernel_two & 30.48 & 67.83 & 31.31 & 85.14 & 64.05 & 82.12 & 86.32 & 51.15 & 83.00 & 75.75 & N/A & 75.75 & 82.91 & N/A & 82.91
+
+done
+None
+
+papi **Overall** info type: LLC
+benchmarks & serial_serial_gc & parallel_serial_gc & parallel_both_gc & conc_mark_sweep_gc & g1_gc
+kernel_four & 37.30 & 33.48 & 34.19 & 40.10 & 34.24
+kernel_one & 29.88 & 30.99 & 29.23 & 35.80 & 29.43
+kernel_three & 73.95 & 67.01 & 68.34 & 67.03 & 67.75
+kernel_two & 43.28 & 91.31 & 93.75 & 83.61 & 94.11
+
+done
+None

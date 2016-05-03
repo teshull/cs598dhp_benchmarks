@@ -1,0 +1,36 @@
+gc type  serial_serial_gc
+gc type  conc_mark_sweep_gc
+gc type  parallel_both_gc
+gc type  parallel_serial_gc
+gc type  g1_gc
+
+papi **During GC** info type: DL1
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & g1_gc & g1_gc & g1_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall & young & full & overall & young & full & overall
+kernel_four & 96.50 & 95.70 & 96.10 & 95.67 & 95.11 & 95.33 & 95.70 & 97.33 & 96.59 & 97.33 & N/A & 97.33 & 97.61 & N/A & 97.61
+kernel_one & 97.71 & N/A & 97.71 & 97.75 & N/A & 97.75 & 97.75 & N/A & 97.75 & 97.64 & N/A & 97.64 & 97.77 & N/A & 97.77
+kernel_three & 96.80 & 97.43 & 96.96 & 97.55 & 97.18 & 97.39 & 97.60 & 99.27 & 98.32 & 96.27 & N/A & 96.27 & 98.17 & N/A & 98.17
+kernel_two & 98.79 & 96.93 & 98.43 & 94.35 & 95.62 & 94.89 & 94.67 & 98.21 & 96.24 & 98.65 & N/A & 98.65 & 96.36 & N/A & 96.36
+
+done
+
+papi **After GC** info type: DL1
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & conc_mark_sweep_gc & g1_gc & g1_gc & g1_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall & young & full & overall & young & full & overall
+kernel_four & 96.43 & 91.76 & 95.27 & 94.84 & 87.34 & 92.84 & 95.54 & 95.56 & 95.55 & 96.08 & N/A & 96.08 & 97.35 & N/A & 97.35
+kernel_one & 97.71 & N/A & 97.71 & 97.74 & N/A & 97.74 & 97.74 & N/A & 97.74 & 97.61 & N/A & 97.61 & 97.64 & N/A & 97.64
+kernel_three & 97.09 & 95.55 & 97.06 & 97.62 & 94.90 & 97.49 & 97.61 & 93.82 & 97.43 & 97.41 & N/A & 97.41 & 97.59 & N/A & 97.59
+kernel_two & 98.86 & 94.04 & 98.75 & 95.60 & 93.31 & 95.26 & 95.21 & 98.18 & 95.48 & 97.77 & N/A & 97.77 & 97.26 & N/A & 97.26
+
+done
+None
+
+papi **Overall** info type: DL1
+benchmarks & serial_serial_gc & parallel_serial_gc & parallel_both_gc & conc_mark_sweep_gc & g1_gc
+kernel_four & 95.74 & 95.37 & 95.81 & 96.49 & 96.85
+kernel_one & 97.72 & 97.75 & 97.75 & 97.64 & 97.75
+kernel_three & 96.35 & 96.85 & 97.29 & 97.16 & 96.68
+kernel_two & 98.85 & 98.29 & 98.40 & 98.62 & 98.20
+
+done
+None
