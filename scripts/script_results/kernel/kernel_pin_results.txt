@@ -1,0 +1,39 @@
+gc type  serial_serial_gc
+filename:  kernel_four-pin.log
+filename:  kernel_three-pin.log
+filename:  kernel_two-pin.log
+filename:  kernel_one-pin.log
+gc type  parallel_both_gc
+filename:  kernel_four-pin.log
+filename:  kernel_three-pin.log
+filename:  kernel_two-pin.log
+filename:  kernel_one-pin.log
+gc type  parallel_serial_gc
+filename:  kernel_four-pin.log
+filename:  kernel_three-pin.log
+filename:  kernel_two-pin.log
+filename:  kernel_one-pin.log
+
+gc count  info
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc
+benchmarks & young & full & total & young & full & total & young & full & total
+kernel_four & 6 & 0 & 6 & 3 & 1 & 4 & 3 & 1 & 4
+kernel_one & 234 & 0 & 234 & 97 & 0 & 97 & 108 & 0 & 108
+kernel_three & 29 & 0 & 29 & 8 & 0 & 8 & 8 & 0 & 8
+kernel_two & 42 & 0 & 42 & 8 & 0 & 8 & 8 & 0 & 8
+
+memory footprint info
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall
+kernel_four & 2.21 & N/A & 131.76 & 4.98 & 0.63 & 131.76 & 2.63 & 1.93 & 131.76
+kernel_one & 0.61 & N/A & 8.89 & 0.73 & N/A & 8.89 & 0.70 & N/A & 8.89
+kernel_three & 6.53 & N/A & 86.25 & 9.89 & N/A & 86.25 & 9.72 & N/A & 86.25
+kernel_two & 3.74 & N/A & 81.45 & 8.09 & N/A & 81.45 & 7.38 & N/A & 81.45
+
+cache hit rate info
+gc_types & serial_serial_gc & serial_serial_gc & serial_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_serial_gc & parallel_both_gc & parallel_both_gc & parallel_both_gc
+benchmarks & young & full & overall & young & full & overall & young & full & overall
+kernel_four & 99.68 & 99.51 & 99.61 & 99.68 & 99.51 & 99.51 & 99.68 & 99.51 & 99.60
+kernel_one & 99.96 & N/A & 100.00 & 99.96 & N/A & 100.00 & 99.96 & N/A & 100.00
+kernel_three & 99.81 & N/A & 99.84 & 99.81 & N/A & 99.81 & 99.81 & N/A & 99.81
+kernel_two & 99.82 & N/A & 99.86 & 99.82 & N/A & 99.82 & 99.82 & N/A & 99.83
